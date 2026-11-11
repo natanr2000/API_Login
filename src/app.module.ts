@@ -2,8 +2,12 @@ import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { \[api\]Controller } from './[api/]/[api/].controller.js';
-import { ApiController } from './api/api.controller.js';
+import { UsersController } from './users/users.controller.js';
+import { UsersService } from './users/users.service.js';
+import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module.js';
+import { PrismaService } from './prisma/prisma.service.js';
+import { PrismaModule } from './prisma/prisma.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -16,9 +20,13 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       appKey: process.env.OBSERVE_APP_KEY ?? 'YOUR_APP_KEY',
       appSecret: process.env.OBSERVE_APP_SECRET ?? 'YOUR_APP_SECRET',
       serviceId: 'project-name',
+
     }),
+    ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule,
+    PrismaModule
   ],
-  controllers: [AppController, \[api\]Controller, ApiController],
-  providers: [AppService],
+  controllers: [AppController, UsersController],
+  providers: [AppService, UsersService, PrismaService],
 })
 export class AppModule {}
