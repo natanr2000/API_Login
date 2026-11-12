@@ -26,7 +26,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     UsersModule,
     PrismaModule
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService, UsersService, PrismaService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
